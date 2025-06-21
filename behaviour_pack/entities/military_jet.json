@@ -1,0 +1,94 @@
+{
+  "format_version": "1.10",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "militaryjet:jet",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false,
+      "spawn_egg": {
+        "base_color": "#2e2e2e",
+        "overlay_color": "#1a1a1a"
+      },
+      "materials": ["entity_alphatest"],
+      "textures": ["textures/entity/military_jet.png"],
+      "geometry": "geometry.military_jet",
+      "scripts": {},
+      "render_controllers": ["controller.render.default"],
+      "max_health": 40,
+      "movement": {
+        "value": 0.0
+      }
+    },
+    "components": {
+      "minecraft:health": {
+        "value": 40,
+        "max": 40
+      },
+      "minecraft:movement": {
+        "value": 0.0
+      },
+      "minecraft:rideable": {
+        "seat_positions": [
+          {
+            "position": [0, 1.2, 0.3]
+          }
+        ],
+        "inputs": [
+          "jump",
+          "sneak",
+          "left",
+          "right",
+          "forward",
+          "back"
+        ]
+      },
+      "minecraft:projectile": {
+        "damage": 6
+      },
+      "minecraft:collision_box": {
+        "width": 1.5,
+        "height": 1.5,
+        "offset": [0, 0.75, 0]
+      }
+    },
+    "events": {
+      "drop_bomb": {
+        "sequence": [
+          {
+            "spawn_entity": {
+              "entity": "militaryjet:bomb",
+              "spawn_pos": [0, -1, 0.5]
+            }
+          }
+        ]
+      },
+      "drop_missile": {
+        "sequence": [
+          {
+            "spawn_entity": {
+              "entity": "militaryjet:missile",
+              "spawn_pos": [0.5, 0, 0.7]
+            }
+          },
+          {
+            "spawn_entity": {
+              "entity": "militaryjet:missile",
+              "spawn_pos": [-0.5, 0, 0.7]
+            }
+          }
+        ]
+      }
+    },
+    "event_handlers": {
+      "minecraft:entity_use_item": {
+        "event": "drop_bomb",
+        "target": "self"
+      },
+      "minecraft:entity_secondary_use": {
+        "event": "drop_missile",
+        "target": "self"
+      }
+    }
+  }
+}
